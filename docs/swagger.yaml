@@ -1,0 +1,190 @@
+basePath: /api/v1
+definitions:
+  model.CreateMusicDTO:
+    properties:
+      group:
+        type: string
+      song:
+        type: string
+    type: object
+  model.Music:
+    properties:
+      artist:
+        type: string
+      id:
+        type: string
+      link:
+        type: string
+      release_date:
+        type: string
+      song:
+        type: string
+      text:
+        type: string
+    type: object
+  model.UpdateMusicDTO:
+    properties:
+      artist:
+        type: string
+      link:
+        type: string
+      release_date:
+        type: string
+      song:
+        type: string
+      text:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    name: Flastor
+  description: This is a simple music library.
+  termsOfService: http://swagger.io/terms/
+  title: Songius
+  version: "1.0"
+paths:
+  /songs:
+    get:
+      consumes:
+      - application/json
+      description: get musics
+      parameters:
+      - description: song filter
+        in: query
+        name: song
+        type: string
+      - description: group filter
+        in: query
+        name: group
+        type: string
+      - description: release_date filter
+        in: query
+        name: release_date
+        type: string
+      - description: link filter
+        in: query
+        name: link
+        type: string
+      - description: text filter
+        in: query
+        name: text
+        type: string
+      - description: set output limit
+        in: query
+        name: limit
+        type: string
+      - description: set offset
+        in: query
+        name: offset
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Music'
+            type: array
+        "418":
+          description: I'm a teapot
+      summary: List musics
+      tags:
+      - music
+    post:
+      consumes:
+      - application/json
+      description: create music
+      parameters:
+      - description: Create music
+        in: body
+        name: music
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateMusicDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Music'
+        "418":
+          description: I'm a teapot
+      summary: Create music
+      tags:
+      - music
+  /songs/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete music by ID
+      parameters:
+      - description: Music ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "418":
+          description: I'm a teapot
+      summary: delete a music
+      tags:
+      - music
+    get:
+      consumes:
+      - application/json
+      description: get music by ID
+      parameters:
+      - description: Music ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Music'
+        "418":
+          description: I'm a teapot
+      summary: Show a music
+      tags:
+      - music
+    put:
+      consumes:
+      - application/json
+      description: update music
+      parameters:
+      - description: Music ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: update music
+        in: body
+        name: music
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateMusicDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "418":
+          description: I'm a teapot
+      summary: Update music
+      tags:
+      - music
+swagger: "2.0"
